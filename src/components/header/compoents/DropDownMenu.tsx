@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../../context/authcontext";
 import { Logout } from "../../logout/logout";
@@ -14,12 +14,20 @@ const DropDownMenu = (props: DropDownMenuProps) => {
     try {
       await Logout();
       setAuthenticated(false);
+      setShowDropDown(false);
+     
     } catch (error) {
       console.log(error);
     }
   };
 
-  if(!props.show)
+  const[showDropdown,setShowDropDown] = useState<boolean>(false)
+
+  useEffect(()=>{
+    setShowDropDown(props.show)
+  },[props.show])
+
+  if(!showDropdown)
   return null;
   return (
     <div id="dropdown" className="fixed inset-0" onClick={()=>props.onClose()}>
@@ -40,6 +48,7 @@ const DropDownMenu = (props: DropDownMenuProps) => {
           className="w-100 hover:bg-gray-200 my-2 py-1 text-left px-1"
           onClick={() => {
             handleLogOut();
+            props.onClose();
           }}
         >
           LogOut
