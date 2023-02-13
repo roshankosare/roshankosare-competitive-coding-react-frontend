@@ -5,24 +5,32 @@ import ButtonField from "../common-components/Butttonfield";
 import Logo from "../../../common/Logo";
 import { useAuthModel } from "../context/AuthModelContext";
 import login from "./loginUtil";
+import { useAuth } from "../../../context/authcontext";
 
 type LoginProps = {
   show: boolean;
 };
 const Login = (props: LoginProps) => {
+  
 
   const handleLogIn = async () => {
-    const { isAuthenticated, errors } = await login(email, password);
+   try{
+    const  isAuthenticated = await login(email, password);
+    setAuthenticated(isAuthenticated);
+    setShowAuth(false);
+    
+   }catch(error){
+    console.log(error)
+   }
 
-    if (isAuthenticated) {}
-
-    if (errors) console.log(errors);
+   
   };
 
   const [show, setShow] = useState<boolean>(false);
   const {setShowAuth,setModelToSignUp} = useAuthModel();
   const [email,setEmail] = useState<string>('');
   const [password,setPassword] = useState<string>('');
+  const {setAuthenticated} = useAuth();
 
   useEffect(() => {
     setShow(props.show);

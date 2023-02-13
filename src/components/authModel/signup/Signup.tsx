@@ -5,6 +5,7 @@ import InputFiled from "../common-components/InputField";
 import ButtonField from "../common-components/Butttonfield";
 import { useAuthModel } from "../context/AuthModelContext";
 import { signup } from "./signupUtil";
+import { useAuth } from "../../../context/authcontext";
 
 type signUpProps = {
   show: boolean;
@@ -12,22 +13,20 @@ type signUpProps = {
 
 const Signup = (props: signUpProps) => {
   const [show, setShow] = useState<boolean>(false);
-  const { setShowAuth,setModelToSignIn } = useAuthModel();
-
+  const { setShowAuth, setModelToSignIn } = useAuthModel();
+  const {setAuthenticated} = useAuth();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
 
-  
-
   const handelSignUp = async () => {
-    const { isAuthenticated, errors } = await signup(email, password, username);
-
-    if (isAuthenticated) {
-
+    try {
+      const isAuthenticated = await signup(email, password, username);
+      setAuthenticated(isAuthenticated);
+    setShowAuth(false);
+    } catch (error) {
+      console.log(error);
     }
-
-    if (errors) console.log(errors);
   };
   useEffect(() => {
     setShow(props.show);
@@ -48,7 +47,6 @@ const Signup = (props: signUpProps) => {
         placeholder="username"
         handleFunction={setUsername}
         value={username}
-       
       ></InputFiled>
       <InputFiled
         type="email"
@@ -69,9 +67,15 @@ const Signup = (props: signUpProps) => {
         handleFunction={handelSignUp}
       ></ButtonField>
 
-<div className="w-full flex px-5 py-2 my-5 text-blue-500 justify-between">
-      <p>Already User? </p>
-      <button onClick={()=>{setModelToSignIn()}} >Sign In</button>
+      <div className="w-full flex px-5 py-2 my-5 text-blue-500 justify-between">
+        <p>Already User? </p>
+        <button
+          onClick={() => {
+            setModelToSignIn();
+          }}
+        >
+          Sign In
+        </button>
       </div>
     </Model>
   );

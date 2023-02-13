@@ -5,13 +5,15 @@ import { endPoints } from "../constants/endPoints";
 
 export interface IAuthContext {
   isAuthenticated: boolean;
-  user: User | null | undefined;
+ 
+  setAuthenticated:Function
   
 }
 
 export const AuthContext:React.Context<IAuthContext> = React.createContext<IAuthContext>({
   isAuthenticated: false,
-  user: { username: "", email: "" },
+  setAuthenticated:()=>{}
+
 });
 export const useAuth = () => {
   return useContext(AuthContext);
@@ -40,9 +42,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     checkAuth();
   }, [authorized]);
 
+  const setAutheticated = (value:boolean)=>{
+    setAuthorized(value);
+  }
+
   const values: IAuthContext = {
     isAuthenticated: authorized,
-    user: user,
+    setAuthenticated:setAutheticated
+   
   };
 
   return (
