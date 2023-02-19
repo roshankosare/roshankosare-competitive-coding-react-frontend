@@ -9,9 +9,11 @@ type InputFieldProps = {
 };
 
 const InputField = (props: InputFieldProps) => {
+  
+  
   return (
     <div className="w-full felx flex-col px-2 py-2 my-5">
-      {props.errorMsg && <p className="text-red-500 text-sm text-left py-1">{props.errorMsg}</p>}
+      {props.errorMsg && <p className="text-red-500 text-xs text-left py-1">{props.errorMsg}</p>}
       <input
         type={props.type}
         placeholder={props?.placeholder ?? "Enter value"}

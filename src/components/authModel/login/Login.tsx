@@ -4,37 +4,44 @@ import InputFiled from "../common-components/InputField";
 import ButtonField from "../common-components/Butttonfield";
 import Logo from "../../../common/Logo";
 import { useAuthModel } from "../context/AuthModelContext";
-import login from "./loginUtil";
+import login, { logInValidation } from "./loginUtil";
 import { useAuth } from "../../../context/authcontext";
 
 type LoginProps = {
   show: boolean;
 };
+
 const Login = (props: LoginProps) => {
-  
-
   const handleLogIn = async () => {
-   try{
-    const  isAuthenticated = await login(email, password);
-    setAuthenticated(isAuthenticated);
-    setShowAuth(false);
-    
-   }catch(error){
-    console.log(error)
-   }
+    if(error.emailError || error.passwordError)
+      return
 
-   
+    try {
+     
+      const isAuthenticated = await login(email, password);
+      setAuthenticated(isAuthenticated);
+      setShowAuth(false);
+    } catch (error) {
+     
+      setError(error);
+    }
   };
 
   const [show, setShow] = useState<boolean>(false);
-  const {setShowAuth,setModelToSignUp} = useAuthModel();
-  const [email,setEmail] = useState<string>('');
-  const [password,setPassword] = useState<string>('');
-  const {setAuthenticated} = useAuth();
+  const { setShowAuth, setModelToSignUp } = useAuthModel();
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const { setAuthenticated } = useAuth();
+  const [error, setError] = useState<any>();
 
   useEffect(() => {
     setShow(props.show);
+    setError({});
   }, [props]);
+
+  useEffect(() => {
+    setError(logInValidation(email, password));
+  }, [email, password]);
 
   return (
     <Model
@@ -52,13 +59,14 @@ const Login = (props: LoginProps) => {
         placeholder="username"
         handleFunction={setEmail}
         value={email}
-       
+        errorMsg={error?.emailError}
       ></InputFiled>
       <InputFiled
         type="password"
         placeholder="password"
         handleFunction={setPassword}
         value={password}
+        errorMsg={error?.passwordError}
       ></InputFiled>
 
       <ButtonField
@@ -67,8 +75,14 @@ const Login = (props: LoginProps) => {
         handleFunction={handleLogIn}
       ></ButtonField>
       <div className="w-full flex px-5 py-2 my-5 text-blue-500 justify-between">
-      <p>New User? </p>
-      <button onClick={()=>{setModelToSignUp()}} >Sign Up</button>
+        <p>New User? </p>
+        <button
+          onClick={() => {
+            setModelToSignUp();
+          }}
+        >
+          Sign Up
+        </button>
       </div>
     </Model>
   );
