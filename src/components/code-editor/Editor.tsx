@@ -60,8 +60,8 @@ const Editor = (props: EditorProps) => {
   const handleSubmitCode = async () => {};
 
   return (
-    <div className="flex flex-col max-w-5xl h-5/6 mx-auto my-10 ">
-      <EditorNavBar setLanguage={setLanguage}></EditorNavBar>
+    <div className="flex flex-col max-w-5xl h-5/6 mx-auto my-10 border border-gray-300 ">
+      <EditorNavBar  language  = {language} setLanguage={setLanguage}></EditorNavBar>
       <EditorWindow code={code} setCode={setCode}></EditorWindow>
       <EditorButtonsAndNav
         status={status}

@@ -11,7 +11,7 @@ const Model = (props: ModelProps) => {
   return (
     <div
       id="model"
-      className=" fixed inset-0 bg-black bg-opacity-20  "
+      className=" fixed inset-0 bg-black bg-opacity-20 z-10  "
       onClick={() => props.onClose()}
     >
       <div

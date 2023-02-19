@@ -11,7 +11,7 @@ type EditorButtonProps = {
 const EditorButtonsAndNav = (props: EditorButtonProps) => {
   
   return (
-    <div className="w-100 h-12 text-xs rounded-t-md flex p-2">
+    <div className="w-100 h-12 text-xs flex p-2 border-b border-gray-300 bg-white">
       <button
         className="w-20 p-1  mx-2 bg-green-500 text-white"
         onClick={()=>props.handleRun()}

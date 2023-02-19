@@ -1,11 +1,11 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react'
-import ReactMarkdown from 'react-markdown';
-import { useLocation } from 'react-router-dom';
-import { endPoints } from '../../constants/endPoints';
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import ReactMarkdown from "react-markdown";
+import { useLocation } from "react-router-dom";
+import { endPoints } from "../../constants/endPoints";
 import { IoChatboxEllipsesSharp } from "react-icons/io5";
-import CreateComment from './components/createCommnet/CreateComment';
-import CommentModuel from './components/commnet/Comment';
+import CreateComment from "./components/createCommnet/CreateComment";
+import CommentModuel from "./components/commnet/Comment";
 
 const PostInfoPage = () => {
   const location = useLocation();
@@ -13,26 +13,21 @@ const PostInfoPage = () => {
   const [comments, setComments] = useState<[any]>();
   const postId = location.state;
 
-  
-  
-
   useEffect(() => {
     const getPost = async () => {
-      const response = await axios.get(`${endPoints.post}/${postId}`, {
-        
-      });
-     
-     
+      const response = await axios.get(`${endPoints.post}/${postId}`, {});
+
+      console.log(response);
+
       setPost(response.data.data);
       setComments(response.data.data.comments);
-    
     };
     getPost();
   }, []);
 
   return (
     <div className=" w-full sm:w-3/4 h-auto bg-white  flex flex-col mx-auto    mt-5 pb-10 ">
-      {post && 
+      {post && (
         <div>
           {/* post title div */}
           <div className="w-full  h-10  bg-gray-500 text-white text-bold  text-center py-2">
@@ -46,12 +41,16 @@ const PostInfoPage = () => {
             <p className=" text-xs my-auto text-gray-500 cursor-pointer hover:text-gray-700 text-end">
               {post.auther.username}
             </p>
-            <p className="text-xs mx-2 my-auto text-gray-500 cursor-pointer hover:text-gray-700 text-end">created At: {post.createdAt} </p>
+            <p className="text-xs mx-2 my-auto text-gray-500 cursor-pointer hover:text-gray-700 text-end">
+              created At: {post.createdAt}{" "}
+            </p>
           </div>
 
           {/* post containts div */}
           <div className="w-full h-auto px-4 py-5 flex ">
-            <article><ReactMarkdown>{post.postContaint}</ReactMarkdown></article>
+            <article>
+              <ReactMarkdown>{post.postContaint}</ReactMarkdown>
+            </article>
           </div>
           <CreateComment postId={postId} />
 
@@ -71,18 +70,18 @@ const PostInfoPage = () => {
 
           {/* comments head div end */}
         </div>
-      }
+      )}
 
-      {/* <div className="px-2 py-2">{
-        comments && comments.map((comment:any)=>(
-         
-          <CommentModuel comment = {comment} key={comment._id}/>
-          // <Comment comment = {comment} key={comment._id}/>
-        ))
-
-        }</div> */}
+      <div className="px-2 py-2">
+        {comments &&
+          comments.map((comment: any) => (
+            <>
+              <CommentModuel comment={comment} key={comment._id} />
+            </>
+          ))}
+      </div>
     </div>
   );
-}
+};
 
-export default PostInfoPage
+export default PostInfoPage;
