@@ -14,7 +14,7 @@ type signUpProps = {
 const Signup = (props: signUpProps) => {
   const [show, setShow] = useState<boolean>(false);
   const { setShowAuth, setModelToSignIn } = useAuthModel();
-  const {setAuthenticated} = useAuth();
+  const { setAuthenticated } = useAuth();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
@@ -23,7 +23,7 @@ const Signup = (props: signUpProps) => {
     try {
       const isAuthenticated = await signup(email, password, username);
       setAuthenticated(isAuthenticated);
-    setShowAuth(false);
+      setShowAuth(false);
     } catch (error) {
       console.log(error);
     }
@@ -31,6 +31,8 @@ const Signup = (props: signUpProps) => {
   useEffect(() => {
     setShow(props.show);
   }, [props]);
+
+  
   return (
     <Model
       show={show}

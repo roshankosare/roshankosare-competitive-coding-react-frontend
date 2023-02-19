@@ -6,10 +6,10 @@ import Links from './compoents/Links'
 
 const Header = () => {
   return (
-    <div className="flex justify-between p-2 w-screen h-14 pt-3 bg-white ">
+    <div className="flex justify-between px-2  w-screen h-16 pt-3 bg-white pb-5 ">
     <Logo size={3}/>
     {/* TODO:- make header responsive */}
-   <Links></Links>
+   <div className='hidden sm:block'><Links></Links></div>
   <AuthModelProvider>
   <AuthLinks></AuthLinks>
   </AuthModelProvider>

@@ -4,6 +4,8 @@ export const endPoints = {
     signUpURL:REACT_APP_BASE_URL+"/auth/signup",
     singOutURL:REACT_APP_BASE_URL+"/auth/signout",
     authURL:REACT_APP_BASE_URL+"/auth/auth",
-    uploadPost:REACT_APP_BASE_URL+"/post/create",
-    getPost:REACT_APP_BASE_URL+"/post"
+    post:REACT_APP_BASE_URL+"/post",
+    code:REACT_APP_BASE_URL+"/code",
+    
+    
 }
