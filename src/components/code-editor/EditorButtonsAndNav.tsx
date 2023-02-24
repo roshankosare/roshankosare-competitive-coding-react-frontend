@@ -22,24 +22,25 @@ const EditorButtonsAndNav = (props: EditorButtonProps) => {
       {props.problem ? (
         <button
           className="w-20 p-1 mx-2 bg-green-500 text-white"
-          onClick={props.handleSubmit && props.handleSubmit()}
-          disabled={props?.submitButtonDisabled}
+          onClick={()=>{ props.handleSubmit && props?.handleSubmit(); console.log("hii")}}
+         
         >
           submit
         </button>
       ) : null}
-      <h3
+      <p
         className={`text-center p-1 mx-4 text-md font-bold
      ${
        props.status === "pending"
          ? "text-orange-500"
-         : props.status === "success"
+         : props.status === "completed"
          ? "text-green-500"
          : "text-red-600"
      }`}
       >
         {props.status}
-      </h3>
+      </p>
+     
     </div>
   );
 };

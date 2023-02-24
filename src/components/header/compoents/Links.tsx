@@ -15,13 +15,13 @@ const Links = () => {
     },
     {
       id: 3,
-      name: "Discuss",
-      link: "/discuss",
+      name: "Explore",
+      link: "/explore",
     },
     {
       id: 4,
       name: "code Editor",
-      link: "/codeeditor",
+      link: "/editor",
     },
   ];
   return (

@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { codeSnippits } from "./CodeSnippits";
 import EditorButtonsAndNav from "./EditorButtonsAndNav";
-import { getJobStatus, handleRun, handleSubmit } from "./EditorHandleFunction";
+import {
+  getJobStatus,
+  getSubmitJobStatus,
+  handleRun,
+  handleSubmit,
+} from "./EditorHandleFunction";
 import EditorInputOutput from "./EditorInputOutput";
 import EditorNavBar from "./EditorNavBar";
 import EditorWindow from "./EditorWindow";
@@ -17,6 +22,7 @@ type EditorProps = {
   //   handleSubmit?: Function;
   //   submitButtonDisabled?: boolean;
   problem: boolean;
+  problemId?: string;
   //   setInput: Function;
   //   output: string;
 };
@@ -28,6 +34,9 @@ const Editor = (props: EditorProps) => {
   const [submitButtonDisable, setSubmitButtonDisable] = useState(false);
   const [language, setLanguage] = useState<string>("c");
   const [input, setInput] = useState("");
+  const [result, setResult] = useState<string>();
+  const [testCasesPassed, setTestCasesPassed] = useState<number>(0);
+  const [totalTestCases, setTotalTestCases] = useState<number>();
 
   useEffect(() => {
     setCode(codeSnippits[language]);
@@ -39,29 +48,61 @@ const Editor = (props: EditorProps) => {
 
     setStatus("pending");
     try {
-      const result = await handleRun({code:code,language:language});
-      
-     
+      const result = await handleRun({ code: code, language: language });
 
-       let intervalId = setInterval(async () => {
+      let intervalId = setInterval(async () => {
         const jobResult = await getJobStatus(result.jobId);
-        console.log(jobResult)
-       
+        console.log(jobResult);
+
         if (jobResult.jobStatus === "completed") {
           clearInterval(intervalId);
           setOutput(jobResult.output);
-          setStatus(jobResult.status);
+          setStatus("completed");
           setRunButtonDisabled(false);
         }
-      }, 300);
+      }, 500);
     } catch (error) {}
   };
 
-  const handleSubmitCode = async () => {};
+  const handleSubmitCode = async () => {
+    try {
+      const result = await handleSubmit({
+        code: code,
+        language: language,
+        problemId: props.problemId,
+      });
+
+      setStatus("pending");
+      let intervalId = setInterval(async () => {
+        const jobResult = await getSubmitJobStatus(result.jobId);
+        console.log(jobResult);
+
+        if (jobResult.jobStatus === "completed") {
+          clearInterval(intervalId);
+          setOutput(jobResult.output);
+          setStatus("completed");
+          setRunButtonDisabled(false);
+          setResult(jobResult.result);
+          setTotalTestCases(jobResult.testCasesResult.length);
+          for (let i = 0; i < jobResult.testCasesResult.length; i++) {
+           
+            if (jobResult.testCasesResult[i].status === "pass"){
+             
+              setTestCasesPassed(pre=>pre+1);
+            }
+         
+          }
+        }
+      }, 500);
+    } catch (error) {}
+  };
 
   return (
     <div className="flex flex-col max-w-5xl h-5/6 mx-auto my-10 border border-gray-300 ">
-      <EditorNavBar  language  = {language} setLanguage={setLanguage}></EditorNavBar>
+      <EditorNavBar
+        language={language}
+        setLanguage={setLanguage}
+      ></EditorNavBar>
       <EditorWindow code={code} setCode={setCode}></EditorWindow>
       <EditorButtonsAndNav
         status={status}
@@ -71,6 +112,13 @@ const Editor = (props: EditorProps) => {
         submitButtonDisabled={submitButtonDisable}
         handleSubmit={handleSubmitCode}
       ></EditorButtonsAndNav>
+      {result && (
+        <div className="w-full h-10 py-2 border-b flex">
+          {" "}
+          <p className="mx-2 my-auto "> {result}</p>
+          <p className="mx-2 my-auto">Passed:{testCasesPassed}/{totalTestCases} test cases</p>
+        </div>
+      )}
       <EditorInputOutput
         setInput={setInput}
         output={output}

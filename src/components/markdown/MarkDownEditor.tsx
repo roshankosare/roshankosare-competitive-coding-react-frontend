@@ -17,7 +17,7 @@ const MarkDownEditor = ({
 
   return (
     <div className=" flex flex-col border rounded-sm w-full mx-auto h-auto ">
-      <div className="w-full h-10 my-2  ">
+      <div className="w-full  my-2  ">
         <MarkDownNavBar addMarkToEditor={setMarkdownToTextArea} />
       </div>
       <div className={ `flex w-full px-2 py-2`}>

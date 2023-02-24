@@ -17,7 +17,7 @@ const PostInfoPage = () => {
     const getPost = async () => {
       const response = await axios.get(`${endPoints.post}/${postId}`, {});
 
-      console.log(response);
+     
 
       setPost(response.data.data);
       setComments(response.data.data.comments);
@@ -76,7 +76,7 @@ const PostInfoPage = () => {
         {comments &&
           comments.map((comment: any) => (
             <>
-              <CommentModuel comment={comment} key={comment._id} />
+              <CommentModuel comment={comment} key={comment.commentId} />
             </>
           ))}
       </div>

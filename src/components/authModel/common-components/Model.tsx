@@ -18,7 +18,7 @@ const Model = (props: ModelProps) => {
         onClick={(e) => {
           e.stopPropagation();
         }}
-        className=" w-96 h-3/4 inset-1  bg-white fixed top-2/4 left-2/4 -translate-x-1/2 -translate-y-1/2 px-4 py-4  flex flex-col"
+        className=" w-auto h-auto   bg-white fixed top-2/4 left-2/4 -translate-x-1/2 -translate-y-1/2  flex  "
       >
         {props?.children}
       </div>

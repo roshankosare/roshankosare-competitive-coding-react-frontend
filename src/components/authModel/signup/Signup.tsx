@@ -21,13 +21,13 @@ const Signup = (props: signUpProps) => {
   const [error, setError] = useState<any>();
 
   const handelSignUp = async () => {
-    if (error.emailError || error.passwordError || error.username ) return;
+    if (error.emailError || error.passwordError || error.username) return;
     try {
       const isAuthenticated = await signup(email, password, username);
       setAuthenticated(isAuthenticated);
       setShowAuth(false);
     } catch (error) {
-      setError(error)
+      setError(error);
     }
   };
   useEffect(() => {
@@ -46,46 +46,48 @@ const Signup = (props: signUpProps) => {
         setShowAuth(false);
       }}
     >
-      <div className="w-full flex justify-center">
-        <Logo size={2}></Logo>
-      </div>
-      <InputFiled
-        type="text"
-        placeholder="username"
-        handleFunction={setUsername}
-        value={username}
-        errorMsg={error?.usernameError}
-      ></InputFiled>
-      <InputFiled
-        type="email"
-        placeholder="Email"
-        handleFunction={setEmail}
-        value={email}
-        errorMsg={error?.emailError}
-      ></InputFiled>
-      <InputFiled
-        type="password"
-        placeholder="password"
-        handleFunction={setPassword}
-        value={password}
-        errorMsg={error?.passwordError}
-      ></InputFiled>
+      <div className="w-96 h-auto px-4 py-4 ">
+        <div className="w-full flex justify-center">
+          <Logo size={2}></Logo>
+        </div>
+        <InputFiled
+          type="text"
+          placeholder="username"
+          handleFunction={setUsername}
+          value={username}
+          errorMsg={error?.usernameError}
+        ></InputFiled>
+        <InputFiled
+          type="email"
+          placeholder="Email"
+          handleFunction={setEmail}
+          value={email}
+          errorMsg={error?.emailError}
+        ></InputFiled>
+        <InputFiled
+          type="password"
+          placeholder="password"
+          handleFunction={setPassword}
+          value={password}
+          errorMsg={error?.passwordError}
+        ></InputFiled>
 
-      <ButtonField
-        active={true}
-        text={"Sign Up"}
-        handleFunction={handelSignUp}
-      ></ButtonField>
+        <ButtonField
+          active={true}
+          text={"Sign Up"}
+          handleFunction={handelSignUp}
+        ></ButtonField>
 
-      <div className="w-full flex px-5 py-2 my-5 text-blue-500 justify-between">
-        <p>Already User? </p>
-        <button
-          onClick={() => {
-            setModelToSignIn();
-          }}
-        >
-          Sign In
-        </button>
+        <div className="w-full flex px-5 py-2 my-5 text-blue-500 justify-between">
+          <p>Already User? </p>
+          <button
+            onClick={() => {
+              setModelToSignIn();
+            }}
+          >
+            Sign In
+          </button>
+        </div>
       </div>
     </Model>
   );

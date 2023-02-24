@@ -6,6 +6,7 @@ export const endPoints = {
     authURL:REACT_APP_BASE_URL+"/auth/auth",
     post:REACT_APP_BASE_URL+"/post",
     code:REACT_APP_BASE_URL+"/code",
+    problem:REACT_APP_BASE_URL+"/problems",
     
     
 }

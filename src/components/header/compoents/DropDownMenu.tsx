@@ -32,7 +32,7 @@ const DropDownMenu = (props: DropDownMenuProps) => {
   return (
     <div id="dropdown" className="fixed inset-0" onClick={()=>props.onClose()}>
       <div
-        className="fixed w-52 h-auto shadow-md flex flex-col top-16 right-14 bg-white px-2 py-2 "
+        className="fixed w-52 h-auto shadow-md flex flex-col top-20 right-14 bg-white px-2 py-2 "
         onClick={(e) => {
           e.stopPropagation();
         }}

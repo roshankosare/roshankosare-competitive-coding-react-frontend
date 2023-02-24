@@ -13,16 +13,13 @@ type LoginProps = {
 
 const Login = (props: LoginProps) => {
   const handleLogIn = async () => {
-    if(error.emailError || error.passwordError)
-      return
+    if (error.emailError || error.passwordError) return;
 
     try {
-     
       const isAuthenticated = await login(email, password);
       setAuthenticated(isAuthenticated);
       setShowAuth(false);
     } catch (error) {
-     
       setError(error);
     }
   };
@@ -51,38 +48,40 @@ const Login = (props: LoginProps) => {
         setShowAuth(false);
       }}
     >
-      <div className="flex flex-col justify-center">
-        <Logo size={2}></Logo>
-      </div>
-      <InputFiled
-        type="email"
-        placeholder="username"
-        handleFunction={setEmail}
-        value={email}
-        errorMsg={error?.emailError}
-      ></InputFiled>
-      <InputFiled
-        type="password"
-        placeholder="password"
-        handleFunction={setPassword}
-        value={password}
-        errorMsg={error?.passwordError}
-      ></InputFiled>
+      <div className="w-96 h-auto px-4 py-4 ">
+        <div className="flex flex-col justify-center ">
+          <Logo size={2}></Logo>
+        </div>
+        <InputFiled
+          type="email"
+          placeholder="username"
+          handleFunction={setEmail}
+          value={email}
+          errorMsg={error?.emailError}
+        ></InputFiled>
+        <InputFiled
+          type="password"
+          placeholder="password"
+          handleFunction={setPassword}
+          value={password}
+          errorMsg={error?.passwordError}
+        ></InputFiled>
 
-      <ButtonField
-        active={true}
-        text={"Sign In"}
-        handleFunction={handleLogIn}
-      ></ButtonField>
-      <div className="w-full flex px-5 py-2 my-5 text-blue-500 justify-between">
-        <p>New User? </p>
-        <button
-          onClick={() => {
-            setModelToSignUp();
-          }}
-        >
-          Sign Up
-        </button>
+        <ButtonField
+          active={true}
+          text={"Sign In"}
+          handleFunction={handleLogIn}
+        ></ButtonField>
+        <div className="w-full flex px-5 py-2 my-5 text-blue-500 justify-between">
+          <p>New User? </p>
+          <button
+            onClick={() => {
+              setModelToSignUp();
+            }}
+          >
+            Sign Up
+          </button>
+        </div>
       </div>
     </Model>
   );
